@@ -18,6 +18,16 @@ To the evaluator of your choice.
 
 The main function was designed for command line usage in a .jar, but by swapping the evaluator class that you initialize you can easily change the problem within the IDE of your choice.
 
+# Leiningen:
+
+```
+:repositories [["brevis" "http://dl.bintray.com/kephale/brevis"]]
+```
+
+```
+:dependencies [[us.brevis/GRNEAT "0.0.1"]]
+```
+
 # Citing:
 
 Cussat-Blanc, S., Harrington, K., and Pollack, J. (2015) Gene Regulatory Network Evolution Through Augmenting Topologies. IEEE Transactions on Evolutionary Computation 19(6), pp. 823 - 837.
