@@ -7,7 +7,7 @@ import evolver.GRNGenome;
 import grn.GRNModel;
 import grn.GRNProtein;
 
-public abstract class GRNGenomeEvaluator {
+public class GRNGenomeEvaluator {
 	public int generation=0;// some evaluators are dynamic problems dependent on generation number
 	public boolean nonCacheable = false;// some evaluators cannot reuse fitness (i.e. dynamic problems)
 
@@ -19,7 +19,7 @@ public abstract class GRNGenomeEvaluator {
 	
 	public abstract double evaluate(GRNGenome aGenome);
 	
-	public GRNModel buildGRNFromGenome(GRNGenome aGenome) {
+	public static GRNModel buildGRNFromGenome(GRNGenome aGenome) {
 		Vector<GRNProtein> prots=new Vector<GRNProtein>();
 		for (GRNGene gi : aGenome.getInputGenes()) {
 			prots.add(gi.getProtein());
