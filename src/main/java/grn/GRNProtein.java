@@ -44,11 +44,11 @@ public class GRNProtein implements Serializable {
 		concentration = newConc;
 	}
 	
-	double getConcentration() {
+	public double getConcentration() {
 		return concentration;
 	}
 	
-	int getID() {
+	public int getID() {
 		return id;
 	}
 	
