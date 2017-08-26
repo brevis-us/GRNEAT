@@ -1,4 +1,4 @@
-package evolver;
+package fun.grn.grneat.evolver;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
-import evaluators.GRNGenomeEvaluator;
+import fun.grn.grneat.evaluators.GRNGenomeEvaluator;
 
 public class Species implements Cloneable {
 	protected ArrayList<GRNGenome> genomes=null;

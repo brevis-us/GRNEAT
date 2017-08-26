@@ -1,4 +1,4 @@
-package evolver;
+package fun.grn.grneat.evolver;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,24 +8,24 @@ import java.util.List;
 import java.util.Random;
 
 
-import evaluators.GRNGenomeEvaluator;
-import evaluators.IntertwinedSpiralsSubsequence;
-import evaluators.IntertwinedSpiralsVariableTime;
-import evaluators.DoublingFrequencyEvaluator;
-import evaluators.LowPassFilterEvaluator;
-import evaluators.CoverageControl;
-import evaluators.IntertwinedSpirals;
-import grn.GRNProtein;
-import operators.GRNAddGeneMutationOperator;
-import operators.GRNAligningCrossoverOperator_ParentCountProb;
-import operators.GRNAligningCrossoverOperator_v1;
-import operators.GRNAligningCrossoverOperator_v1b;
-import operators.GRNAligningCrossoverOperator_v2;
-import operators.GRNCrossoverOperator;
-import operators.GRNDeleteGeneMutationOperator;
-import operators.GRNGeneMutationOperator;
-import operators.GRNMutationOperator;
-import operators.GRNOnePointCrossoverOperator;
+import fun.grn.grneat.evaluators.GRNGenomeEvaluator;
+import fun.grn.grneat.evaluators.IntertwinedSpiralsSubsequence;
+import fun.grn.grneat.evaluators.IntertwinedSpiralsVariableTime;
+import fun.grn.grneat.evaluators.DoublingFrequencyEvaluator;
+import fun.grn.grneat.evaluators.LowPassFilterEvaluator;
+import fun.grn.grneat.evaluators.CoverageControl;
+import fun.grn.grneat.evaluators.IntertwinedSpirals;
+import fun.grn.grneat.grn.GRNProtein;
+import fun.grn.grneat.operators.GRNAddGeneMutationOperator;
+import fun.grn.grneat.operators.GRNAligningCrossoverOperator_ParentCountProb;
+import fun.grn.grneat.operators.GRNAligningCrossoverOperator_v1;
+import fun.grn.grneat.operators.GRNAligningCrossoverOperator_v1b;
+import fun.grn.grneat.operators.GRNAligningCrossoverOperator_v2;
+import fun.grn.grneat.operators.GRNCrossoverOperator;
+import fun.grn.grneat.operators.GRNDeleteGeneMutationOperator;
+import fun.grn.grneat.operators.GRNGeneMutationOperator;
+import fun.grn.grneat.operators.GRNMutationOperator;
+import fun.grn.grneat.operators.GRNOnePointCrossoverOperator;
 
 public class Evolver {
 	protected int currentGen=0;
@@ -445,7 +445,7 @@ public class Evolver {
 			}
 		}
 		try {
-			evaluator.buildGRNFromGenome(bestGenome).writeToFile(folderName+java.io.File.separator+"grn_"+currentGen+"_"+fitMax+".grn");
+			evaluator.buildGRNFromGenome(bestGenome).writeToFile(folderName+java.io.File.separator+"grn_"+currentGen+"_"+fitMax+".fun.grn.grneat.grn");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -491,17 +491,17 @@ public class Evolver {
 					boolean success=false;
 					while (tries<nMaxTries && !success) {
 						try {
-							evaluator.buildGRNFromGenome(g.next()).writeToFile(folderName+java.io.File.separator+"population_"+currentGen+java.io.File.separator+"species_"+i+java.io.File.separator+"genome_"+j+".grn");
+							evaluator.buildGRNFromGenome(g.next()).writeToFile(folderName+java.io.File.separator+"population_"+currentGen+java.io.File.separator+"species_"+i+java.io.File.separator+"genome_"+j+".fun.grn.grneat.grn");
 							success=true;
 						} catch (Exception e) {
-							//System.err.println(folderName+"/population_"+currentGen+"/species_"+i+"/genome_"+j+".grn");
+							//System.err.println(folderName+"/population_"+currentGen+"/species_"+i+"/genome_"+j+".fun.grn.grneat.grn");
 							//System.err.println("Folder not ready... waiting a second");
 							Thread.sleep(1000);
 							tries++;
 						}
 					}
 					if (!success) {
-						System.err.println("Couldn't write file "+folderName+java.io.File.separator+"population_"+currentGen+java.io.File.separator+"species_"+i+java.io.File.separator+"genome_"+j+".grn");
+						System.err.println("Couldn't write file "+folderName+java.io.File.separator+"population_"+currentGen+java.io.File.separator+"species_"+i+java.io.File.separator+"genome_"+j+".fun.grn.grneat.grn");
 					}
 				}
 			}
@@ -665,8 +665,8 @@ public class Evolver {
 		//e.greatActivated=false;
 		
 		if (!customExpName) {
-			e.evaluator=new CoverageControl( args, e.rng );//new MichalSignalProcessExp3();
-			//e.evaluator = new IntertwinedSpirals( args );
+			//e.evaluator=new CoverageControl( args, e.rng );//new MichalSignalProcessExp3();
+			e.evaluator = new IntertwinedSpirals( args );
 			e.experienceName=e.evaluator.name;
 		} else {
 			if( e.experienceName.compareTo("DoublingFrequencyEvaluator") == 0) e.evaluator=new DoublingFrequencyEvaluator();  

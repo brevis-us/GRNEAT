@@ -1,4 +1,4 @@
-package grn;
+package fun.grn.grneat.grn;
 
 import java.io.Serializable;
 

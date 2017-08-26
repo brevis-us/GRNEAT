@@ -1,8 +1,8 @@
-package operators;
+package fun.grn.grneat.operators;
 
 import java.util.Random;
 
-import evolver.GRNGenome;
+import fun.grn.grneat.evolver.GRNGenome;
 
 
 public abstract class GRNCrossoverOperator {

@@ -1,6 +1,6 @@
-package evolver;
+package fun.grn.grneat.evolver;
 
-import grn.GRNProtein;
+import fun.grn.grneat.grn.GRNProtein;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

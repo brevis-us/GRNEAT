@@ -1,4 +1,4 @@
-package evaluators;
+package fun.grn.grneat.evaluators;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import evolver.GRNGenome;
-import grn.GRNModel;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNModel;
 
 /*
 ;;;;;;;;;;;;
@@ -91,31 +91,31 @@ public class IntertwinedSpiralsVariableTime extends GRNGenomeEvaluator {
 	@Override
 	// Evaluation based on a fixed # of steps
 	/*public double evaluate(GRNGenome aGenome) {
-		GRNModel grn=buildGRNFromGenome(aGenome);
+		GRNModel fun.grn.grneat.grn=buildGRNFromGenome(aGenome);
 		
 		double fitness = -num_samples * 2;
 		
 		for( int k = 0; k < num_samples * 2; k++ ) {
 			
-			grn.reset();
-			grn.evolve(25);// Warmup
+			fun.grn.grneat.grn.reset();
+			fun.grn.grneat.grn.evolve(25);// Warmup
 			
 			// Set inputs
-			grn.proteins.get(0).concentration = 0.5 * data[ 3 * k ];
-			grn.proteins.get(1).concentration = 0.5 * data[ 3 * k + 1 ];
+			fun.grn.grneat.grn.proteins.get(0).concentration = 0.5 * data[ 3 * k ];
+			fun.grn.grneat.grn.proteins.get(1).concentration = 0.5 * data[ 3 * k + 1 ];
 			    			
-			grn.evolve(25);// Compute answer
+			fun.grn.grneat.grn.evolve(25);// Compute answer
 			
 			int targetClass = (int) data[ 3 * k + 2 ];
 			int predictedClass;
 			
-			if( grn.proteins.get(2).concentration > grn.proteins.get(3).concentration ) {
+			if( fun.grn.grneat.grn.proteins.get(2).concentration > fun.grn.grneat.grn.proteins.get(3).concentration ) {
 				predictedClass = 1;
 			} else {
 				predictedClass = 0;
 			}
 			    
-			double error_signal  = grn.proteins.get(2).concentration - grn.proteins.get(3).concentration * ( targetClass == 0 ? 1 : -1 ); 
+			double error_signal  = fun.grn.grneat.grn.proteins.get(2).concentration - fun.grn.grneat.grn.proteins.get(3).concentration * ( targetClass == 0 ? 1 : -1 );
 			
 			fitness += Math.max( -0.5, Math.min( 0.5, error_signal ) );
 			
@@ -189,19 +189,19 @@ public class IntertwinedSpiralsVariableTime extends GRNGenomeEvaluator {
 		if( aGenome.getLastFitness() == 0 ) {
 			for( int k = 0; k < num_samples * 2; k++ ) {
 				
-				grn.reset();
-				grn.evolve(25);// Warmup
+				fun.grn.grneat.grn.reset();
+				fun.grn.grneat.grn.evolve(25);// Warmup
 				
 				// Set inputs
-				grn.proteins.get(0).concentration = 0.5 * data[ 3 * k ];
-				grn.proteins.get(1).concentration = 0.5 * data[ 3 * k + 1 ];
+				fun.grn.grneat.grn.proteins.get(0).concentration = 0.5 * data[ 3 * k ];
+				fun.grn.grneat.grn.proteins.get(1).concentration = 0.5 * data[ 3 * k + 1 ];
 				    			
-				grn.evolve(25);// Compute answer
+				fun.grn.grneat.grn.evolve(25);// Compute answer
 				
 				int targetClass = (int) data[ 3 * k + 2 ];
 				int predictedClass;
 				
-				if( grn.proteins.get(2).concentration > grn.proteins.get(3).concentration ) {
+				if( fun.grn.grneat.grn.proteins.get(2).concentration > fun.grn.grneat.grn.proteins.get(3).concentration ) {
 					predictedClass = 1;
 				} else {
 					predictedClass = 0;
@@ -249,11 +249,11 @@ public class IntertwinedSpiralsVariableTime extends GRNGenomeEvaluator {
 				}			
 								
 				int r = (int) Math.round( 255.0 * ( grn.proteins.get(2).concentration - grn.proteins.get(3).concentration > 0 ? 
-						//( grn.proteins.get(2).concentration - grn.proteins.get(3).concentration ) : 0 ) );
+						//( fun.grn.grneat.grn.proteins.get(2).concentration - fun.grn.grneat.grn.proteins.get(3).concentration ) : 0 ) );
 						1 : 0 ) );
 				int g = 0;//255 * predictedClass;
 				int b = (int) Math.round( 255.0 * ( grn.proteins.get(2).concentration - grn.proteins.get(3).concentration <= 0 ? 
-						//( grn.proteins.get(2).concentration - grn.proteins.get(3).concentration ) : 0 ) );
+						//( fun.grn.grneat.grn.proteins.get(2).concentration - fun.grn.grneat.grn.proteins.get(3).concentration ) : 0 ) );
 						1 : 0 ) );
 				
 				int pixel = ( r << 16 ) | ( g << 8 ) | b; 
@@ -318,13 +318,13 @@ public class IntertwinedSpiralsVariableTime extends GRNGenomeEvaluator {
 	
 	
 	public static void main(String args[]) throws Exception {		
-		//GRNModel grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366656050552666000/grn_1_0.0.grn");
+		//GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366656050552666000/grn_1_0.0.fun.grn.grneat.grn");
 		
-		//GRNModel grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366679988257973000/grn_9_-0.39690721649484534.grn");
+		//GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366679988257973000/grn_9_-0.39690721649484534.fun.grn.grneat.grn");
 		
-		//GRNModel grn = GRNModel.loadFromFile("grn_161_-0.29896907216494845.grn");
-		//GRNModel grn = GRNModel.loadFromFile("grn_221_-0.27835051546391754.grn");
-		GRNModel grn = GRNModel.loadFromFile("grn_499_-0.26288659793814434.grn");
+		//GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("grn_161_-0.29896907216494845.fun.grn.grneat.grn");
+		//GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("grn_221_-0.27835051546391754.fun.grn.grneat.grn");
+		GRNModel grn = GRNModel.loadFromFile("grn_499_-0.26288659793814434.fun.grn.grneat.grn");
 		
 		System.out.println(grn.toString());
 		
@@ -334,11 +334,11 @@ public class IntertwinedSpiralsVariableTime extends GRNGenomeEvaluator {
 		eval.drawSpiralImage( grn, "testspiral.png" );
 		System.out.println( "Done drawing" );
 		
-//		double fit=eval.evolveGRN(grn, true, 125, 1000);
-//		double fit=eval.evolveGRN(grn, true, 500, 1000);
-//		double fit=eval.evolveGRN_zero(grn, true, 1000);
-//		double fit=eval.evolveGRN(grn, true, 7500, 15000);
-//		double fit=eval.evolveGRN(grn, true, 83.33333, 1000);
+//		double fit=eval.evolveGRN(fun.grn.grneat.grn, true, 125, 1000);
+//		double fit=eval.evolveGRN(fun.grn.grneat.grn, true, 500, 1000);
+//		double fit=eval.evolveGRN_zero(fun.grn.grneat.grn, true, 1000);
+//		double fit=eval.evolveGRN(fun.grn.grneat.grn, true, 7500, 15000);
+//		double fit=eval.evolveGRN(fun.grn.grneat.grn, true, 83.33333, 1000);
 				
 	}
 

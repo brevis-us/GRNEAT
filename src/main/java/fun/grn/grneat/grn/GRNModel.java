@@ -1,4 +1,4 @@
-package grn;
+package fun.grn.grneat.grn;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -143,6 +143,78 @@ public class GRNModel implements Serializable {
 
 			currentStep++;
 		}
+
+	}
+
+	/*
+	 * Use this function to run for multiple steps faster
+	 */
+	public void evolveMultistep(int nbSteps) {
+		double enhance, inhibit;
+		int i,j,k;
+		double sumConcentration;
+		//		for (i=0; i<proteins.size(); i++) {
+		//			cerr << proteins[i].concentration << "\t";
+		//		}
+		//		cerr << proteins.size() << endl;
+
+		double[] currentProteins = new double[proteins.size()];
+		for( k = 0; k < proteins.size(); k++ ) currentProteins[k] = proteins.get(k).getConcentration();
+		double[] nextProteins = new double[proteins.size()];
+
+		for (int step=0; step<nbSteps; step++) {
+
+
+			// Calculating next step protein concentrations
+			for (j=0; j<proteins.size(); j++) {
+				// For an input protein, the concentration is not calculated
+				if (proteins.get(j).type==GRNProtein.INPUT_PROTEIN) {
+					nextProteins[j] =  currentProteins[j];
+				} else {
+					enhance=0;
+					inhibit=0;
+					// Calculating enhancing and inhibiting factor for the current protein
+					for (k=0; k<proteins.size(); k++) {
+						if (proteins.get(k).type!=GRNProtein.OUTPUT_PROTEIN) {
+							enhance+=currentProteins[k]*enhanceMatching[j][k];
+							inhibit+=currentProteins[k]*inhibitMatching[j][k];
+						}
+					}
+					// if (j=5) cout << enhance << "   " << inhibit << endl;
+					// Calculating the next concentration of current protein
+					nextProteins[j] = Math.max(0.0,proteins.get(j).concentration+delta/proteins.size()*(enhance-inhibit));
+				}
+			}
+
+			//		for (i=0; i<nextProteins.size(); i++) {
+			//			cout << nextProteins[i].id << "=" << nextProteins[i].concentration << "\t";
+			//		}
+			//		cout << endl;
+			// Reajusting proteins concentration so that their sum stay equal to 1
+			sumConcentration = 0;
+			for (i=0; i<proteins.size(); i++) {
+				if (proteins.get(i).type!=GRNProtein.INPUT_PROTEIN) {
+					sumConcentration+=nextProteins[i];
+				}
+			}
+			//cout << sumConcentration << "\t" << nbDiv << "\t" << (sumConcentration-1)/nbDiv << "\t";
+			if (sumConcentration!=0) {
+				for (i=0; i<proteins.size(); i++) {
+					if (proteins.get(i).type!=GRNProtein.INPUT_PROTEIN) {
+						nextProteins[i]/=sumConcentration;
+					}
+				}
+			}
+
+			// Finalizing the step by switching the vector
+			for( k = 0; k < proteins.size(); k++ )
+				currentProteins[k] = nextProteins[k];
+
+			currentStep++;
+		}
+
+		for( k = 0; k < proteins.size(); k++ )
+			proteins.get(k).setConcentration(currentProteins[k]);
 
 	}
 

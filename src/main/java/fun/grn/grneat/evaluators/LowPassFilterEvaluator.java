@@ -1,7 +1,7 @@
-package evaluators;
+package fun.grn.grneat.evaluators;
 
-import evolver.GRNGenome;
-import grn.GRNModel;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNModel;
 
 public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 	double coef=3.0;
@@ -25,7 +25,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 				evolveGRNDoubleFreq(grn, false, 250, 31.25, 1000)+
 				evolveGRNZero(grn, false, 1000);
 
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		aGenome.setNewFitness(fitness);
 
 		GRNGenomeEvaluator.numEvaluations++;
@@ -51,7 +51,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 			}
 		}
 
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		return -fitness;
 
 	}
@@ -103,7 +103,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 		}
 		fitness*=1.0/(1.0+S);
 
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		return -fitness;
 	}
 
@@ -150,7 +150,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 		}
 		fitness*=1.0/(1.0+S);
 
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		return -fitness;
 	}
 
@@ -202,7 +202,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 		}
 		fitness*=1.0/(1.0+S);
 
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		return -fitness;
 	}
 
@@ -216,40 +216,40 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 		GRNModel gaGRN[]=new GRNModel[26];
 		GRNModel esGRN[]=new GRNModel[26];
 		String greatFiles[]={
-				"grn_299_-329.09981349860095.grn",	"grn_299_-406.21324950142565.grn",	"grn_299_-465.3027738438956.grn",
-				"grn_299_-329.2325839380702.grn",	"grn_299_-409.1461016744854.grn",	"grn_299_-482.22024647740636.grn",
-				"grn_299_-346.2301485332818.grn",	"grn_299_-409.36748107116995.grn",	"grn_299_-509.73837272483564.grn",
-				"grn_299_-347.7666559154336.grn",	"grn_299_-411.2289911450258.grn",	"grn_299_-511.6519835240472.grn",
-				"grn_299_-348.77350451429635.grn",	"grn_299_-425.2215394406491.grn",	"grn_299_-513.2001161028146.grn",
-				"grn_299_-369.5373808236058.grn",	"grn_299_-428.96734035951727.grn",	"grn_299_-531.584740500517.grn",
-				"grn_299_-369.96784305136396.grn",	"grn_299_-434.43962622292213.grn",	"grn_299_-574.6193158328872.grn",
-				"grn_299_-388.77514852472444.grn",	"grn_299_-436.38405426543727.grn",	"grn_299_-585.3843633836484.grn",
-				"grn_299_-397.7053490688321.grn",	"grn_299_-453.29152264146956.grn",	"grn_299_-628.0302373539503.grn",
-				"grn_299_-405.68737821830524.grn",	"grn_299_-456.3915636292151.grn",	"grn_299_-984.4006489695837.grn",
+				"grn_299_-329.09981349860095.fun.grn.grneat.grn",	"grn_299_-406.21324950142565.fun.grn.grneat.grn",	"grn_299_-465.3027738438956.fun.grn.grneat.grn",
+				"grn_299_-329.2325839380702.fun.grn.grneat.grn",	"grn_299_-409.1461016744854.fun.grn.grneat.grn",	"grn_299_-482.22024647740636.fun.grn.grneat.grn",
+				"grn_299_-346.2301485332818.fun.grn.grneat.grn",	"grn_299_-409.36748107116995.fun.grn.grneat.grn",	"grn_299_-509.73837272483564.fun.grn.grneat.grn",
+				"grn_299_-347.7666559154336.fun.grn.grneat.grn",	"grn_299_-411.2289911450258.fun.grn.grneat.grn",	"grn_299_-511.6519835240472.fun.grn.grneat.grn",
+				"grn_299_-348.77350451429635.fun.grn.grneat.grn",	"grn_299_-425.2215394406491.fun.grn.grneat.grn",	"grn_299_-513.2001161028146.fun.grn.grneat.grn",
+				"grn_299_-369.5373808236058.fun.grn.grneat.grn",	"grn_299_-428.96734035951727.fun.grn.grneat.grn",	"grn_299_-531.584740500517.fun.grn.grneat.grn",
+				"grn_299_-369.96784305136396.fun.grn.grneat.grn",	"grn_299_-434.43962622292213.fun.grn.grneat.grn",	"grn_299_-574.6193158328872.fun.grn.grneat.grn",
+				"grn_299_-388.77514852472444.fun.grn.grneat.grn",	"grn_299_-436.38405426543727.fun.grn.grneat.grn",	"grn_299_-585.3843633836484.fun.grn.grneat.grn",
+				"grn_299_-397.7053490688321.fun.grn.grneat.grn",	"grn_299_-453.29152264146956.fun.grn.grneat.grn",	"grn_299_-628.0302373539503.fun.grn.grneat.grn",
+				"grn_299_-405.68737821830524.fun.grn.grneat.grn",	"grn_299_-456.3915636292151.fun.grn.grneat.grn",	"grn_299_-984.4006489695837.fun.grn.grneat.grn",
 		};
 		String gaFiles[]={
-				"grn_300_-1092.3221329658606.grn",	"grn_300_-533.2285004737496.grn",	"grn_300_-707.681543613565.grn",
-				"grn_300_-439.34021964103385.grn",	"grn_300_-543.0755120436231.grn",	"grn_300_-721.0833806784334.grn",
-				"grn_300_-460.49726960695455.grn",	"grn_300_-547.0213301001882.grn",	"grn_300_-755.9050783342359.grn",
-				"grn_300_-495.26687479449987.grn",	"grn_300_-549.8234310668693.grn",	"grn_300_-812.9594210821596.grn",
-				"grn_300_-497.4030481033237.grn",	"grn_300_-563.8182109096965.grn",	"grn_300_-837.171211773604.grn",
-				"grn_300_-500.517446421063.grn",	"grn_300_-564.9190505161973.grn",	"grn_300_-862.7678862624423.grn",
-				"grn_300_-502.4635133364742.grn",	"grn_300_-588.2281512496638.grn",	"grn_300_-886.1584632306841.grn",
-				"grn_300_-506.0805448594242.grn",	"grn_300_-630.5825397450902.grn",	"grn_300_-942.707677192221.grn",
-				"grn_300_-512.0730671589673.grn",	"grn_300_-664.2426636730385.grn",	"grn_300_-979.7518431256908.grn",
-				"grn_300_-515.4858299560933.grn",	"grn_300_-687.3888845088879.grn",	"grn_300_-989.7703156656927.grn",
+				"grn_300_-1092.3221329658606.fun.grn.grneat.grn",	"grn_300_-533.2285004737496.fun.grn.grneat.grn",	"grn_300_-707.681543613565.fun.grn.grneat.grn",
+				"grn_300_-439.34021964103385.fun.grn.grneat.grn",	"grn_300_-543.0755120436231.fun.grn.grneat.grn",	"grn_300_-721.0833806784334.fun.grn.grneat.grn",
+				"grn_300_-460.49726960695455.fun.grn.grneat.grn",	"grn_300_-547.0213301001882.fun.grn.grneat.grn",	"grn_300_-755.9050783342359.fun.grn.grneat.grn",
+				"grn_300_-495.26687479449987.fun.grn.grneat.grn",	"grn_300_-549.8234310668693.fun.grn.grneat.grn",	"grn_300_-812.9594210821596.fun.grn.grneat.grn",
+				"grn_300_-497.4030481033237.fun.grn.grneat.grn",	"grn_300_-563.8182109096965.fun.grn.grneat.grn",	"grn_300_-837.171211773604.fun.grn.grneat.grn",
+				"grn_300_-500.517446421063.fun.grn.grneat.grn",	"grn_300_-564.9190505161973.fun.grn.grneat.grn",	"grn_300_-862.7678862624423.fun.grn.grneat.grn",
+				"grn_300_-502.4635133364742.fun.grn.grneat.grn",	"grn_300_-588.2281512496638.fun.grn.grneat.grn",	"grn_300_-886.1584632306841.fun.grn.grneat.grn",
+				"grn_300_-506.0805448594242.fun.grn.grneat.grn",	"grn_300_-630.5825397450902.fun.grn.grneat.grn",	"grn_300_-942.707677192221.fun.grn.grneat.grn",
+				"grn_300_-512.0730671589673.fun.grn.grneat.grn",	"grn_300_-664.2426636730385.fun.grn.grneat.grn",	"grn_300_-979.7518431256908.fun.grn.grneat.grn",
+				"grn_300_-515.4858299560933.fun.grn.grneat.grn",	"grn_300_-687.3888845088879.fun.grn.grneat.grn",	"grn_300_-989.7703156656927.fun.grn.grneat.grn",
 		};
 		String esFiles[]={
-				"grn_299_-1048.3973279031354.grn",	"grn_299_-376.18310431612105.grn",	"grn_299_-433.70418871061565.grn",
-				"grn_299_-1078.6455970297197.grn",	"grn_299_-376.4382630147122.grn",	"grn_299_-441.73550612575474.grn",
-				"grn_299_-1105.173333125703.grn",	"grn_299_-390.0920998088891.grn",	"grn_299_-442.11965421818604.grn",
-				"grn_299_-332.6502728189408.grn",	"grn_299_-402.6369767692752.grn",	"grn_299_-454.5296590729756.grn",
-				"grn_299_-337.9259564761536.grn",	"grn_299_-415.23823410693836.grn",	"grn_299_-486.5677766751558.grn",
-				"grn_299_-345.5411007646542.grn",	"grn_299_-419.3784431378082.grn",	"grn_299_-502.1929000488882.grn",
-				"grn_299_-350.4317540971891.grn",	"grn_299_-419.69150481850005.grn",	"grn_299_-521.6252954327341.grn",
-				"grn_299_-351.0796597899462.grn",	"grn_299_-422.7547119276268.grn",	"grn_299_-709.0543870179614.grn",
-				"grn_299_-361.52229849842996.grn",	"grn_299_-426.4821064514153.grn",	"grn_299_-727.3027958269574.grn",
-				"grn_299_-368.2405556367121.grn",	"grn_299_-426.9370165895936.grn",	"grn_299_-965.8748184524359.grn",
+				"grn_299_-1048.3973279031354.fun.grn.grneat.grn",	"grn_299_-376.18310431612105.fun.grn.grneat.grn",	"grn_299_-433.70418871061565.fun.grn.grneat.grn",
+				"grn_299_-1078.6455970297197.fun.grn.grneat.grn",	"grn_299_-376.4382630147122.fun.grn.grneat.grn",	"grn_299_-441.73550612575474.fun.grn.grneat.grn",
+				"grn_299_-1105.173333125703.fun.grn.grneat.grn",	"grn_299_-390.0920998088891.fun.grn.grneat.grn",	"grn_299_-442.11965421818604.fun.grn.grneat.grn",
+				"grn_299_-332.6502728189408.fun.grn.grneat.grn",	"grn_299_-402.6369767692752.fun.grn.grneat.grn",	"grn_299_-454.5296590729756.fun.grn.grneat.grn",
+				"grn_299_-337.9259564761536.fun.grn.grneat.grn",	"grn_299_-415.23823410693836.fun.grn.grneat.grn",	"grn_299_-486.5677766751558.fun.grn.grneat.grn",
+				"grn_299_-345.5411007646542.fun.grn.grneat.grn",	"grn_299_-419.3784431378082.fun.grn.grneat.grn",	"grn_299_-502.1929000488882.fun.grn.grneat.grn",
+				"grn_299_-350.4317540971891.fun.grn.grneat.grn",	"grn_299_-419.69150481850005.fun.grn.grneat.grn",	"grn_299_-521.6252954327341.fun.grn.grneat.grn",
+				"grn_299_-351.0796597899462.fun.grn.grneat.grn",	"grn_299_-422.7547119276268.fun.grn.grneat.grn",	"grn_299_-709.0543870179614.fun.grn.grneat.grn",
+				"grn_299_-361.52229849842996.fun.grn.grneat.grn",	"grn_299_-426.4821064514153.fun.grn.grneat.grn",	"grn_299_-727.3027958269574.fun.grn.grneat.grn",
+				"grn_299_-368.2405556367121.fun.grn.grneat.grn",	"grn_299_-426.9370165895936.fun.grn.grneat.grn",	"grn_299_-965.8748184524359.fun.grn.grneat.grn",
 		};
 		for (int i=0; i<greatGRN.length; i++) {
 			greatGRN[i]=GRNModel.loadFromFile("/Users/cussat/Recherche/Projets/grnNEAT/GREAT_GIT/launcher016-hyperion006/Generalization/LPF/GREAT/"+greatFiles[i]);
@@ -378,7 +378,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 				
 		System.exit(0);		
 		
-/*		String grnFile="default.grn";
+/*		String grnFile="default.fun.grn.grneat.grn";
 		double halfFreq1=125;
 		double halfFreq2=31.25;
 		int steps=1000;
@@ -388,7 +388,7 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 			if (args[k].compareTo("mode") == 0) {
 				k++;
 				mode=Integer.parseInt(args[k]);
-			} else if (args[k].compareTo("grn")==0) {
+			} else if (args[k].compareTo("fun.grn.grneat.grn")==0) {
 				k++;
 				grnFile=args[k];
 			} else if (args[k].compareTo("halfFreq1")==0) {
@@ -404,33 +404,33 @@ public class LowPassFilterEvaluator extends GRNGenomeEvaluator {
 				System.out.println("Unrecognized option: "+args[k]);
 			}
 		}
-		GRNModel grn = GRNModel.loadFromFile(grnFile);
+		GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile(grnFile);
 		MichalSignalProcessExp3 eval=new MichalSignalProcessExp3();
 		double fit=0;
 		switch (mode) {
 		case 0:
-			fit=eval.evolveGRNWithThreshold(grn, true, halfFreq1, steps);
+			fit=eval.evolveGRNWithThreshold(fun.grn.grneat.grn, true, halfFreq1, steps);
 			break;
 		case 1:
-			fit=eval.evolveGRNDoubleFreq(grn, true, halfFreq1, halfFreq2, steps);
+			fit=eval.evolveGRNDoubleFreq(fun.grn.grneat.grn, true, halfFreq1, halfFreq2, steps);
 			break;
 		case 2:
-			fit=eval.evolveGRNTwoFrequencies(grn, true, halfFreq1, halfFreq2, steps, 1000, 2000);
+			fit=eval.evolveGRNTwoFrequencies(fun.grn.grneat.grn, true, halfFreq1, halfFreq2, steps, 1000, 2000);
 			break;
 		case 3:
-			fit=eval.evolveGRNZero(grn, true, steps);
+			fit=eval.evolveGRNZero(fun.grn.grneat.grn, true, steps);
 		default:
 			System.out.println("Unrecognized mode: "+mode);
 			break;
 		}
 		
-//		double fit=eval.evolveGRNWithThreshold(grn, true, 125.0, 1000);
-//		double fit=eval.evolveGRNWithThreshold(grn, true, 250.0, 1000);
-//		double fit=eval.evolveGRNWithThreshold(grn, true, 75, 1000);
-//		double fit=eval.evolveGRNWithThreshold(grn, true, 31.25, 1000);
-//		double fit=eval.evolveGRNDoubleFreq(grn, true, 125, 31.25, 1000);
-//		double fit=eval.evolveGRNDoubleFreq(grn, true, 250, 31.25, 1000);
-//		double fit=eval.evolveGRNZero(grn, true, 1000);
+//		double fit=eval.evolveGRNWithThreshold(fun.grn.grneat.grn, true, 125.0, 1000);
+//		double fit=eval.evolveGRNWithThreshold(fun.grn.grneat.grn, true, 250.0, 1000);
+//		double fit=eval.evolveGRNWithThreshold(fun.grn.grneat.grn, true, 75, 1000);
+//		double fit=eval.evolveGRNWithThreshold(fun.grn.grneat.grn, true, 31.25, 1000);
+//		double fit=eval.evolveGRNDoubleFreq(fun.grn.grneat.grn, true, 125, 31.25, 1000);
+//		double fit=eval.evolveGRNDoubleFreq(fun.grn.grneat.grn, true, 250, 31.25, 1000);
+//		double fit=eval.evolveGRNZero(fun.grn.grneat.grn, true, 1000);
 //		System.out.println("Fitness="+fit);*/
 	}
 

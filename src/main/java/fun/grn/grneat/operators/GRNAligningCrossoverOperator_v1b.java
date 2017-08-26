@@ -1,24 +1,23 @@
-package operators;
+package fun.grn.grneat.operators;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import evolver.GRNGene;
-import evolver.GRNGenome;
+import fun.grn.grneat.evolver.GRNGene;
+import fun.grn.grneat.evolver.GRNGenome;
 
 
-public class GRNAligningCrossoverOperator_v1 extends GRNCrossoverOperator {
+public class GRNAligningCrossoverOperator_v1b extends GRNCrossoverOperator {
 	protected double threshold=0.15;
 	
-	public GRNAligningCrossoverOperator_v1() {
-		name="AligningCrossover_v1("+threshold+")";
+	public GRNAligningCrossoverOperator_v1b() {
+		name="AligningCrossover_v1b("+threshold+")";
 	}
 
 	public GRNGenome reproduce(GRNGenome parent1, GRNGenome parent2, Random rng) {
+//		System.err.println("Align");
 		GRNGenome offspring = new GRNGenome();
 		// Chose randomly the input genes from the parents
 		Collection<GRNGene> inputGenes=parent1.getInputGenes();
@@ -76,41 +75,16 @@ public class GRNAligningCrossoverOperator_v1 extends GRNCrossoverOperator {
 			}
 		}
 		// add some with remaining material
-		if (offspring.getRegulatoryGenes().size()>0) {
-			// if there are regulatory proteins I add one of the parents material or nothing
-			double rnd=rng.nextDouble();
-			if (rnd<0.40) {
-				// adding parent 1 remaining material
-				for (int i=0; i<regGP1.size(); i++) {
-					if (regGP1.get(i)!=null) {
-						offspring.addGene(regGP1.get(i));
-					}
-				}
-			} else if (rnd<0.80) {
-				// adding parent 2 remaining material
-				for (int i=0; i<regGP2.size(); i++) {
-					if (regGP2.get(i)!=null) {
-						offspring.addGene(regGP2.get(i));
-					}
-				}
-			} // else no material added
-		} else {
-			// if there are no regulatory proteins I add one of the parents material
-			if (rng.nextDouble()<0.5) {
-				// adding parent 1 remaining material
-				for (int i=0; i<regGP1.size(); i++) {
-					if (regGP1.get(i)!=null) {
-						offspring.addGene(regGP1.get(i));
-					}
-				}
-			} else {
-				// adding parent 2 remaining material
-				for (int i=0; i<regGP2.size(); i++) {
-					if (regGP2.get(i)!=null) {
-						offspring.addGene(regGP2.get(i));
-					}
-				}
-			} // else no material added
+		// adding from both parents
+		for (int i=0; i<regGP1.size(); i++) {
+			if (regGP1.get(i)!=null) {
+				offspring.addGene(regGP1.get(i));
+			}
+		}
+		for (int i=0; i<regGP2.size(); i++) {
+			if (regGP2.get(i)!=null) {
+				offspring.addGene(regGP2.get(i));
+			}
 		}
 		
 		// crossing the dynamics coefficients
