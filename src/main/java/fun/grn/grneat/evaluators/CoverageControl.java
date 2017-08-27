@@ -1,7 +1,7 @@
-package evaluators;
+package fun.grn.grneat.evaluators;
 
-import evolver.GRNGenome;
-import grn.GRNModel;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNModel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -408,7 +408,7 @@ public class CoverageControl extends GRNGenomeEvaluator {
 		}
 		double fitness=0.0;
 
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		if ( grn != null ) {
 			fitness=evaluate(grn);
 		}
@@ -421,25 +421,25 @@ public class CoverageControl extends GRNGenomeEvaluator {
 	public static void main(String args[]) throws Exception {
 		/*
 		String greatFiles[]={
-				"grn_1.grn",	"grn_14.grn",	"grn_19.grn",	"grn_23.grn",	"grn_4.grn",	"grn_9.grn",
-				"grn_10.grn",	"grn_15.grn",	"grn_2.grn",	"grn_24.grn",	"grn_5.grn",
-				"grn_11.grn",	"grn_16.grn",	"grn_20.grn",	"grn_25.grn",	"grn_6.grn",
-				"grn_12.grn",	"grn_17.grn",	"grn_21.grn",	"grn_7.grn",
-				"grn_13.grn",	"grn_18.grn",	"grn_22.grn",	"grn_3.grn",	"grn_8.grn"
+				"grn_1.fun.grn.grneat.grn",	"grn_14.fun.grn.grneat.grn",	"grn_19.fun.grn.grneat.grn",	"grn_23.fun.grn.grneat.grn",	"grn_4.fun.grn.grneat.grn",	"grn_9.fun.grn.grneat.grn",
+				"grn_10.fun.grn.grneat.grn",	"grn_15.fun.grn.grneat.grn",	"grn_2.fun.grn.grneat.grn",	"grn_24.fun.grn.grneat.grn",	"grn_5.fun.grn.grneat.grn",
+				"grn_11.fun.grn.grneat.grn",	"grn_16.fun.grn.grneat.grn",	"grn_20.fun.grn.grneat.grn",	"grn_25.fun.grn.grneat.grn",	"grn_6.fun.grn.grneat.grn",
+				"grn_12.fun.grn.grneat.grn",	"grn_17.fun.grn.grneat.grn",	"grn_21.fun.grn.grneat.grn",	"grn_7.fun.grn.grneat.grn",
+				"grn_13.fun.grn.grneat.grn",	"grn_18.fun.grn.grneat.grn",	"grn_22.fun.grn.grneat.grn",	"grn_3.fun.grn.grneat.grn",	"grn_8.fun.grn.grneat.grn"
 		};
 		String gaFiles[]={
-				"grn_1.grn",	"grn_14.grn",	"grn_19.grn",	"grn_23.grn",	"grn_4.grn",	"grn_9.grn",
-				"grn_10.grn",	"grn_15.grn",	"grn_2.grn",	"grn_24.grn",	"grn_5.grn",
-				"grn_11.grn",	"grn_16.grn",	"grn_20.grn",	"grn_25.grn",	"grn_6.grn",
-				"grn_12.grn",	"grn_17.grn",	"grn_21.grn",	"grn_7.grn",
-				"grn_13.grn",	"grn_18.grn",	"grn_22.grn",	"grn_3.grn",	"grn_8.grn"
+				"grn_1.fun.grn.grneat.grn",	"grn_14.fun.grn.grneat.grn",	"grn_19.fun.grn.grneat.grn",	"grn_23.fun.grn.grneat.grn",	"grn_4.fun.grn.grneat.grn",	"grn_9.fun.grn.grneat.grn",
+				"grn_10.fun.grn.grneat.grn",	"grn_15.fun.grn.grneat.grn",	"grn_2.fun.grn.grneat.grn",	"grn_24.fun.grn.grneat.grn",	"grn_5.fun.grn.grneat.grn",
+				"grn_11.fun.grn.grneat.grn",	"grn_16.fun.grn.grneat.grn",	"grn_20.fun.grn.grneat.grn",	"grn_25.fun.grn.grneat.grn",	"grn_6.fun.grn.grneat.grn",
+				"grn_12.fun.grn.grneat.grn",	"grn_17.fun.grn.grneat.grn",	"grn_21.fun.grn.grneat.grn",	"grn_7.fun.grn.grneat.grn",
+				"grn_13.fun.grn.grneat.grn",	"grn_18.fun.grn.grneat.grn",	"grn_22.fun.grn.grneat.grn",	"grn_3.fun.grn.grneat.grn",	"grn_8.fun.grn.grneat.grn"
 		};
 		String esFiles[]={
-				"grn_1.grn",	"grn_14.grn",	"grn_19.grn",	"grn_23.grn",	"grn_4.grn",	"grn_9.grn",
-				"grn_10.grn",	"grn_15.grn",	"grn_2.grn",	"grn_24.grn",	"grn_5.grn",
-				"grn_11.grn",	"grn_16.grn",	"grn_20.grn",	"grn_6.grn",
-				"grn_12.grn",	"grn_17.grn",	"grn_21.grn",	"grn_7.grn",
-				"grn_13.grn",	"grn_18.grn",	"grn_22.grn",	"grn_3.grn",	"grn_8.grn"
+				"grn_1.fun.grn.grneat.grn",	"grn_14.fun.grn.grneat.grn",	"grn_19.fun.grn.grneat.grn",	"grn_23.fun.grn.grneat.grn",	"grn_4.fun.grn.grneat.grn",	"grn_9.fun.grn.grneat.grn",
+				"grn_10.fun.grn.grneat.grn",	"grn_15.fun.grn.grneat.grn",	"grn_2.fun.grn.grneat.grn",	"grn_24.fun.grn.grneat.grn",	"grn_5.fun.grn.grneat.grn",
+				"grn_11.fun.grn.grneat.grn",	"grn_16.fun.grn.grneat.grn",	"grn_20.fun.grn.grneat.grn",	"grn_6.fun.grn.grneat.grn",
+				"grn_12.fun.grn.grneat.grn",	"grn_17.fun.grn.grneat.grn",	"grn_21.fun.grn.grneat.grn",	"grn_7.fun.grn.grneat.grn",
+				"grn_13.fun.grn.grneat.grn",	"grn_18.fun.grn.grneat.grn",	"grn_22.fun.grn.grneat.grn",	"grn_3.fun.grn.grneat.grn",	"grn_8.fun.grn.grneat.grn"
 		};
 		GRNModel greatGRN[]=new GRNModel[greatFiles.length];
 		GRNModel gaGRN[]=new GRNModel[gaFiles.length];
@@ -505,9 +505,9 @@ public class CoverageControl extends GRNGenomeEvaluator {
 		System.exit(0);*/
 /**/		
 //		System.err.println(args[0]);
-//		GRNModel grn=GRNModel.loadFromFile(args[0]);
+//		GRNModel fun.grn.grneat.grn=GRNModel.loadFromFile(args[0]);
 		GRNModel grn=GRNModel.loadFromFile("/Users/cussat/Recherche/Projets/grnNEAT/GREAT_GIT/launcher017-hyperion007/Generalization/CC/GA/grn_7.grn");
-		//		grn.reset();
+		//		fun.grn.grneat.grn.reset();
 		double avg=0;
 		/*		String covArgs[]=new String[12];
 		for (int i=0; i<5; i++) {

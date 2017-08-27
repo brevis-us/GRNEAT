@@ -1,8 +1,8 @@
-package operators;
+package fun.grn.grneat.operators;
 
-import evolver.GRNGene;
-import evolver.GRNGenome;
-import grn.GRNProtein;
+import fun.grn.grneat.evolver.GRNGene;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNProtein;
 
 import java.util.Collection;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package evaluators;
+package fun.grn.grneat.evaluators;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import evolver.GRNGenome;
-import grn.GRNModel;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNModel;
 
 /*
 ;;;;;;;;;;;;
@@ -15,31 +15,18 @@ import grn.GRNModel;
 ;; Introduced in "Learning to tell two spirals apart," Lang, K.J. and Witbrock, M.J., Proceedings of the 1988 Connectionist models summer school, 1988.
  */
 
-public class IntertwinedSpirals extends GRNGenomeEvaluator {
+public class IntertwinedSpiralsSubsequence extends GRNGenomeEvaluator {
 	double coef=3.0;
 	int num_samples = 97;// 97 is standard, and required with this implementation, which shifts both spirals to the positive quadrant
 	double inputCoef=0.5;
 
 	double[] data;
-	
-	public boolean fuzzyFitness = false; // false means +1 point per correct answer 0 for wrong, true means float-distance from prediction to target
-	
 
-	public IntertwinedSpirals( String args[] ) {
+	public IntertwinedSpiralsSubsequence() {
 		numGRNInputs=2;
 		numGRNOutputs=2;
-		name="IntertwinedSpirals";
-		
-		for (int k = 0; k < args.length; k++ ) {
-//			System.err.print("\t" + args[k]);
+		name="IntertwinedSpiralsSubsequence";
 
-			if ( args[k].compareTo("fuzzyFitness") == 0) {
-				fuzzyFitness = Boolean.parseBoolean( args[k+1] );
-			}
-		}				
-
-		System.out.println("fuzzy fitness:      "+fuzzyFitness);
-		
 		initDataset();
 	}
 
@@ -97,15 +84,15 @@ public class IntertwinedSpirals extends GRNGenomeEvaluator {
 		grn.reset();
 		grn.evolve(25);// Warmup
 
-		for( int k = 0; k < num_samples * 2; k++ ) {
-
-			//GRNModel localGRN=grn.copy();
-			GRNModel localGRN=grn;
+		double combo0=0;
+		double maxCombo0=0;
+		double minCombo0=num_samples;
+		for( int k = 0; k < num_samples; k++ ) {
+			GRNModel localGRN=grn.copy();
 
 			// Set inputs
 			localGRN.proteins.get(0).concentration = inputCoef * data[ 3 * k ];
 			localGRN.proteins.get(1).concentration = inputCoef * data[ 3 * k + 1 ];
-			
 
 			localGRN.evolve(25);// Compute answer
 
@@ -118,49 +105,72 @@ public class IntertwinedSpirals extends GRNGenomeEvaluator {
 				predictedClass = 0;
 			}
 
-			double target_value = ( targetClass == 0 ? 1 : -1 );
-			double predicted_value  = Math.tanh( localGRN.proteins.get(2).concentration - localGRN.proteins.get(3).concentration ); 
-			
-			/*if( fuzzyFitness ) {
-				fitness += Math.abs( target_value - predicted_value ) / 2.0;// because range is [-1,1]
-			} else {
-				if( predictedClass == targetClass ) {
-					fitness += 1.0;
-				}
-			}*/
-			
-			
 			if( predictedClass == targetClass ) {
-				fitness += 1.0;
-			} else if( fuzzyFitness ) {
-				fitness -= Math.abs( target_value - predicted_value ) / 2.0;// because range is [-1,1]
+				combo0++;
+			} else {
+				maxCombo0=Math.max(combo0, maxCombo0);
+				if (combo0>=0.9) minCombo0=Math.min(combo0, minCombo0);
+				combo0=0;
 			}
 
 			//System.err.println( k + "\t" + data[ 3 * k ] + "\t" + data[ 3 * k + 1] + "\t" + targetClass + "\t" + predictedClass );
 
 		}
 
-		//aGenome.setNewFitness( fitness );
-		aGenome.setNewFitness( fitness / ( num_samples * 2.0 ) );// fitness is negative 1 for each wrong answer out of 194 answers
+		double combo1=0;
+		double maxCombo1=0;
+		double minCombo1=num_samples;
+		for( int k = num_samples; k < 2*num_samples; k++ ) {
+			GRNModel localGRN=grn.copy();
+
+			// Set inputs
+			localGRN.proteins.get(0).concentration = inputCoef * data[ 3 * k ];
+			localGRN.proteins.get(1).concentration = inputCoef * data[ 3 * k + 1 ];
+
+			localGRN.evolve(25);// Compute answer
+
+			int targetClass = (int) data[ 3 * k + 2 ];
+			int predictedClass;
+
+			if( localGRN.proteins.get(2).concentration > localGRN.proteins.get(3).concentration ) {
+				predictedClass = 1;
+			} else {
+				predictedClass = 0;
+			}
+
+			if( predictedClass == targetClass ) {
+				combo1++;
+			} else {
+				maxCombo1=Math.max(combo1, maxCombo1);
+				if (combo1>=0.9) minCombo1=Math.min(combo1, minCombo1);
+				combo1=0;
+			}
+
+			//System.err.println( k + "\t" + data[ 3 * k ] + "\t" + data[ 3 * k + 1] + "\t" + targetClass + "\t" + predictedClass );
+
+		}
+
+		aGenome.setNewFitness(maxCombo0/(1+num_samples-minCombo0)*maxCombo1/(1+num_samples-minCombo1));
+		//aGenome.setNewFitness( fitness / ( num_samples * 2.0 ) );// fitness is negative 1 for each wrong answer out of 194 answers
 
 		/*System.err.println( aGenome.getLastFitness() );
 
 		if( aGenome.getLastFitness() == 0 ) {
 			for( int k = 0; k < num_samples * 2; k++ ) {
 
-				grn.reset();
-				grn.evolve(25);// Warmup
+				fun.grn.grneat.grn.reset();
+				fun.grn.grneat.grn.evolve(25);// Warmup
 
 				// Set inputs
-				grn.proteins.get(0).concentration = 0.5 * data[ 3 * k ];
-				grn.proteins.get(1).concentration = 0.5 * data[ 3 * k + 1 ];
+				fun.grn.grneat.grn.proteins.get(0).concentration = 0.5 * data[ 3 * k ];
+				fun.grn.grneat.grn.proteins.get(1).concentration = 0.5 * data[ 3 * k + 1 ];
 
-				grn.evolve(25);// Compute answer
+				fun.grn.grneat.grn.evolve(25);// Compute answer
 
 				int targetClass = (int) data[ 3 * k + 2 ];
 				int predictedClass;
 
-				if( grn.proteins.get(2).concentration > grn.proteins.get(3).concentration ) {
+				if( fun.grn.grneat.grn.proteins.get(2).concentration > fun.grn.grneat.grn.proteins.get(3).concentration ) {
 					predictedClass = 1;
 				} else {
 					predictedClass = 0;
@@ -190,9 +200,7 @@ public class IntertwinedSpirals extends GRNGenomeEvaluator {
 			for (int j=0; j<(int) ( maxy / dy ); j++) {
 				double x=dx*i;
 				double y=dy*j;
-				//GRNModel localGRN=grn.copy();
-				
-				GRNModel localGRN=grn;
+				GRNModel localGRN=grn.copy();
 
 				// Set inputs
 				localGRN.proteins.get(0).concentration = inputCoef * ( x );
@@ -259,8 +267,7 @@ public class IntertwinedSpirals extends GRNGenomeEvaluator {
 
 			// GRN marks
 			if (grn!=null) {
-				//GRNModel localGRN=grn.copy();
-				GRNModel localGRN=grn;
+				GRNModel localGRN=grn.copy();
 				// Set inputs
 				localGRN.proteins.get(0).concentration = inputCoef * data[ 3 * k ];
 				localGRN.proteins.get(1).concentration = inputCoef * data[ 3 * k + 1 ];
@@ -315,37 +322,35 @@ public class IntertwinedSpirals extends GRNGenomeEvaluator {
 	}
 
 	public static void main(String args[]) throws Exception {
-		//GRNModel grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366656050552666000/grn_1_0.0.grn");
+		//GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366656050552666000/grn_1_0.0.fun.grn.grneat.grn");
 
-		//GRNModel grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366679988257973000/grn_9_-0.39690721649484534.grn");
+		//GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1366679988257973000/grn_9_-0.39690721649484534.fun.grn.grneat.grn");
 
-//		GRNModel grn = GRNModel.loadFromFile("grn_298_-0.28865979381443296.grn");
-//		GRNModel grn = GRNModel.loadFromFile("grn_344_-0.27319587628865977.grn");
-		//		GRNModel grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1368526741478672000/grn_118_-0.36597938144329895.grn");
+//		GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("grn_298_-0.28865979381443296.fun.grn.grneat.grn");
+//		GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("grn_344_-0.27319587628865977.fun.grn.grneat.grn");
+		//		GRNModel fun.grn.grneat.grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1368526741478672000/grn_118_-0.36597938144329895.fun.grn.grneat.grn");
 
-//		System.out.println(grn.toString());
+//		System.out.println(fun.grn.grneat.grn.toString());
 
-		//GRNModel grn = GRNModel.loadFromFile("/Users/cussat/Recherche/Projets/grnNEAT/GREAT_GIT/launcher018/IntertwinedSpirals/run_15117926140547400/grn_499_-0.2422680412371134.grn");
-		GRNModel grn = GRNModel.loadFromFile("/Users/kyle/git/GRNEAT2/IntertwinedSpirals/run_1454529429986992000/grn_11_0.0.grn");		
-		IntertwinedSpirals eval=new IntertwinedSpirals( args );
-		//eval.drawSampledImage(grn, "/Users/kyle/git/GRNEAT2/IntertwinedSpirals/run_1454529429986992000/ep.png", null, 0.0025);
-		eval.drawSpiralImage(grn, "/Users/kyle/git/GRNEAT2/IntertwinedSpirals/run_1454529429986992000/ep_full.png", 0.0025);
+		GRNModel grn = GRNModel.loadFromFile("IntertwinedSpirals/run_1368721413023005000/grn_123_0.3261480787253983.fun.grn.grneat.grn");
+		IntertwinedSpiralsSubsequence eval=new IntertwinedSpiralsSubsequence();
+		eval.drawSampledImage(grn, "test.png", null, 0.0025);
 		
 /*		for (int i=0; i<22; i++) {
-			GRNModel grn=GRNModel.loadFromFile("launcher018/Generalization/IS/GREAT/grn_"+i+".grn");
+			GRNModel fun.grn.grneat.grn=GRNModel.loadFromFile("launcher018/Generalization/IS/GREAT/grn_"+i+".fun.grn.grneat.grn");
 			System.out.println( "Drawing image GREAT "+i );
-			eval.drawSpiralImage( grn, "spiral_extended_GREAT_"+i+".png", 0.0025 );
-			eval.drawSampledImage(grn, "spiral_grn_GREAT_"+i+".png", null, 0.0025);
+			eval.drawSpiralImage( fun.grn.grneat.grn, "spiral_extended_GREAT_"+i+".png", 0.0025 );
+			eval.drawSampledImage(fun.grn.grneat.grn, "spiral_grn_GREAT_"+i+".png", null, 0.0025);
 			File inputFile=new File("spiral_extended_GREAT_"+i+".png");
-			eval.drawSampledImage(grn, "spiral_extendedSampled_GREAT_"+i+".png", ImageIO.read(inputFile), 0.0025);
+			eval.drawSampledImage(fun.grn.grneat.grn, "spiral_extendedSampled_GREAT_"+i+".png", ImageIO.read(inputFile), 0.0025);
 			System.out.println( "Done drawing" );
 			
-			grn=GRNModel.loadFromFile("launcher018/Generalization/IS/GA/grn_"+i+".grn");
+			fun.grn.grneat.grn=GRNModel.loadFromFile("launcher018/Generalization/IS/GA/grn_"+i+".fun.grn.grneat.grn");
 			System.out.println( "Drawing image GA "+i );
-			eval.drawSpiralImage( grn, "spiral_extended_GA_"+i+".png", 0.0025 );
-			eval.drawSampledImage(grn, "spiral_grn_GA_"+i+".png", null, 0.0025);
+			eval.drawSpiralImage( fun.grn.grneat.grn, "spiral_extended_GA_"+i+".png", 0.0025 );
+			eval.drawSampledImage(fun.grn.grneat.grn, "spiral_grn_GA_"+i+".png", null, 0.0025);
 			inputFile=new File("spiral_extended_GA_"+i+".png");
-			eval.drawSampledImage(grn, "spiral_extendedSampled_GA_"+i+".png", ImageIO.read(inputFile), 0.0025);
+			eval.drawSampledImage(fun.grn.grneat.grn, "spiral_extendedSampled_GA_"+i+".png", ImageIO.read(inputFile), 0.0025);
 			System.out.println( "Done drawing" );
 		}
 

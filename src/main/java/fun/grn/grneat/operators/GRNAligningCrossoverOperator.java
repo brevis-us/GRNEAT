@@ -1,22 +1,19 @@
-package operators;
+package fun.grn.grneat.operators;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import evolver.GRNGene;
-import evolver.GRNGenome;
+import fun.grn.grneat.evolver.GRNGene;
+import fun.grn.grneat.evolver.GRNGenome;
 
 
-public class GRNAligningCrossoverOperator_v2 extends GRNCrossoverOperator {
+public class GRNAligningCrossoverOperator extends GRNCrossoverOperator {
 	protected double threshold=0.15;
-	protected int tournamentSize = 3;
 	
-	public GRNAligningCrossoverOperator_v2() {
-		name="AligningCrossover_v2("+threshold+")";
+	public GRNAligningCrossoverOperator() {
+		name="AligningCrossover("+threshold+")";
 	}
 
 	public GRNGenome reproduce(GRNGenome parent1, GRNGenome parent2, Random rng) {
@@ -41,29 +38,21 @@ public class GRNAligningCrossoverOperator_v2 extends GRNCrossoverOperator {
 		}
 		// Aligning regulatory genes
 //		Collection<GRNGene> regGP1=parent1.getRegulatoryGenes();
-		ArrayList<GRNGene> regGP1;
-		ArrayList<GRNGene> regGP2;
-		if (parent1.getRegulatoryGenes().size()<parent2.getRegulatoryGenes().size()) {
-			regGP1=new ArrayList<GRNGene>(parent1.getRegulatoryGenes());
-			regGP2=new ArrayList<GRNGene>(parent2.getRegulatoryGenes());
-		} else {
-			regGP1=new ArrayList<GRNGene>(parent2.getRegulatoryGenes());
-			regGP2=new ArrayList<GRNGene>(parent1.getRegulatoryGenes());			
-		}
+		ArrayList<GRNGene> regGP1=new ArrayList<GRNGene>(parent1.getRegulatoryGenes());
 		Collections.shuffle(regGP1, rng);
-		Collections.shuffle(regGP2, rng);
+		ArrayList<GRNGene> regGP2=new ArrayList<GRNGene>(parent2.getRegulatoryGenes());
 		for (int i=0; i<regGP1.size(); i++) {
 			GRNGene gp1=regGP1.get(i);
 			double minDist=99999;
 			GRNGene pairedGP2=null;
 			int paired2Index=-1;
-			for (int j=0; j< Math.min(tournamentSize,regGP2.size()); j++) {
+			for (int j=0; j<regGP2.size(); j++) {
 				GRNGene gp2=regGP2.get(j);
 				if (gp2!=null) {
 					// not already paired
 					double dist=gp1.distanceTo(gp2);
 //					System.err.println(dist);
-					if (dist<minDist) {
+					if (dist<threshold && dist<minDist) {
 						pairedGP2=gp2;
 						minDist=dist;
 						paired2Index=j;
@@ -81,11 +70,45 @@ public class GRNAligningCrossoverOperator_v2 extends GRNCrossoverOperator {
 				// marking as paired
 				regGP1.set(i, null);
 				regGP2.set(paired2Index, null);
-			} else {
-				System.err.println("Error during aligning!!!");
 			}
 		}
-
+		// add some with remaining material
+		if (offspring.getRegulatoryGenes().size()>0) {
+			// if there are regulatory proteins I add one of the parents material or nothing
+			double rnd=rng.nextDouble();
+			if (rnd<0.33333333) {
+				// adding parent 1 remaining material
+				for (int i=0; i<regGP1.size(); i++) {
+					if (regGP1.get(i)!=null) {
+						offspring.addGene(regGP1.get(i));
+					}
+				}
+			} else if (rnd<0.66666666) {
+				// adding parent 2 remaining material
+				for (int i=0; i<regGP2.size(); i++) {
+					if (regGP2.get(i)!=null) {
+						offspring.addGene(regGP2.get(i));
+					}
+				}
+			} // else no material added
+		} else {
+			// if there are no regulatory proteins I add one of the parents material
+			if (rng.nextDouble()<0.5) {
+				// adding parent 1 remaining material
+				for (int i=0; i<regGP1.size(); i++) {
+					if (regGP1.get(i)!=null) {
+						offspring.addGene(regGP1.get(i));
+					}
+				}
+			} else {
+				// adding parent 2 remaining material
+				for (int i=0; i<regGP2.size(); i++) {
+					if (regGP2.get(i)!=null) {
+						offspring.addGene(regGP2.get(i));
+					}
+				}
+			} // else no material added
+		}
 		
 		// crossing the dynamics coefficients
 		if (rng.nextDouble()<0.5) {

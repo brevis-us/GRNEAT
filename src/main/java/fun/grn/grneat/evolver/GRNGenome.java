@@ -1,14 +1,23 @@
-package evolver;
+package fun.grn.grneat.evolver;
 
-import grn.GRNProtein;
+import fun.grn.grneat.grn.GRNProtein;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
-public class GRNGenome implements Comparable<Object> {	
+public class GRNGenome implements Comparable<Object>, Serializable {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8085148987600210778L;
 	protected Hashtable<Integer, GRNGene> inputGenes;
 	protected Hashtable<Integer, GRNGene> outputGenes;
 	protected Hashtable<Long, GRNGene> regulatoryGenes;
@@ -309,5 +318,27 @@ public class GRNGenome implements Comparable<Object> {
 	
 	public void hasBeenModified() {
 		hasBeenEvaluated=false;
+	}
+	
+	public void writeToFile(String fileName) throws Exception {
+		FileOutputStream fos = new FileOutputStream(fileName);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+		oos.writeObject(this);
+
+		oos.close();
+		fos.close();
+	}
+	
+	public static GRNGenome loadFromFile(String fileName) throws Exception {
+		FileInputStream fis = new FileInputStream(fileName);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
+		GRNGenome res = (GRNGenome)ois.readObject();
+
+		fis.close();
+		ois.close();
+
+		return res;
 	}
 }

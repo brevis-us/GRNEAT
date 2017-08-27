@@ -1,9 +1,9 @@
-package operators;
+package fun.grn.grneat.operators;
 
 import java.util.Random;
 
-import evolver.GRNGene;
-import evolver.GRNGenome;
+import fun.grn.grneat.evolver.GRNGene;
+import fun.grn.grneat.evolver.GRNGenome;
 
 public class GRNAddGeneMutationOperator extends GRNMutationOperator {
 	public int grnMaxSize=Integer.MAX_VALUE;

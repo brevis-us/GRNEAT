@@ -1,15 +1,15 @@
-package evaluators;
+package fun.grn.grneat.evaluators;
 
 import java.util.Vector;
 
-import evolver.GRNGene;
-import evolver.GRNGenome;
-import grn.GRNModel;
-import grn.GRNProtein;
+import fun.grn.grneat.evolver.GRNGene;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNModel;
+import fun.grn.grneat.grn.GRNProtein;
 
 public class GRNGenomeEvaluator {
-	public int generation=0;// some evaluators are dynamic problems dependent on generation number
-	public boolean nonCacheable = false;// some evaluators cannot reuse fitness (i.e. dynamic problems)
+	public int generation=0;// some fun.grn.grneat.evaluators are dynamic problems dependent on generation number
+	public boolean nonCacheable = false;// some fun.grn.grneat.evaluators cannot reuse fitness (i.e. dynamic problems)
 
 	public int numGRNInputs=0;
 	public int numGRNOutputs=0;
@@ -17,7 +17,9 @@ public class GRNGenomeEvaluator {
 
 	public String name="SuperClass";
 	
-	public abstract double evaluate(GRNGenome aGenome);
+	public double evaluate(GRNGenome aGenome) {
+		return 0;
+	}
 	
 	public static GRNModel buildGRNFromGenome(GRNGenome aGenome) {
 		Vector<GRNProtein> prots=new Vector<GRNProtein>();

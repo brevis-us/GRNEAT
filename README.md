@@ -5,7 +5,7 @@
 
 This code was originally made in Eclipse, and works well there with the standard "Run" mechanism.
 
-Go to: java/evolver/Evolver.java and press Run
+Go to: java/fun.fun.grn.grneat.grn.grneat.fun.grn.grneat.evolver/Evolver.java and press Run
 
 # To change experiments: 
 

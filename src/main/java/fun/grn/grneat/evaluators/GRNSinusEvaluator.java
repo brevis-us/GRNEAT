@@ -1,7 +1,7 @@
-package evaluators;
+package fun.grn.grneat.evaluators;
 
-import evolver.GRNGenome;
-import grn.GRNModel;
+import fun.grn.grneat.evolver.GRNGenome;
+import fun.grn.grneat.grn.GRNModel;
 
 public class GRNSinusEvaluator extends GRNGenomeEvaluator {
 	
@@ -30,7 +30,7 @@ public class GRNSinusEvaluator extends GRNGenomeEvaluator {
 			fitness+=Math.abs(Math.sin((double)nStep)-(grn.proteins.get(2).concentration*8.0-1.0));
 		}
 		
-		//System.err.println("fitness="+fitness+"  =>  "+grn.toString());
+		//System.err.println("fitness="+fitness+"  =>  "+fun.grn.grneat.grn.toString());
 		aGenome.setNewFitness(-fitness);
 
 		numEvaluations++;

@@ -1,8 +1,8 @@
-package evolver;
+package fun.grn.grneat.evolver;
 
 import java.util.Random;
 
-import grn.GRNProtein;
+import fun.grn.grneat.grn.GRNProtein;
 
 public class GRNGene implements Comparable<Object> {
 	public double protCoef=0.75;
