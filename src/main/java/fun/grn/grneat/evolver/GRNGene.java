@@ -1,10 +1,14 @@
 package fun.grn.grneat.evolver;
 
-import java.util.Random;
-
 import fun.grn.grneat.grn.GRNProtein;
 
-public class GRNGene implements Comparable<Object> {
+import java.io.Serializable;
+import java.util.Random;
+
+public class GRNGene implements Comparable<Object>, Serializable {
+
+	private static final long serialVersionUID = 8085148987600210717L;
+
 	public double protCoef=0.75;
 	public double enhCoef=0.125;
 	public double inhCoef=0.125;
@@ -157,5 +161,4 @@ public class GRNGene implements Comparable<Object> {
 	public String toString() {
 		return "["+protId+","+protEnh+","+protInh+","+protType+","+isDisabled+","+connectTo+","+geneId+"]";
 	}
-	
 }
