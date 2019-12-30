@@ -28,10 +28,13 @@ class PairwiseDistances implements Callable<Integer> {
 
     public Integer call() throws Exception {
         List<GRNGenome> genomes = new ArrayList<GRNGenome>();
+        List<String> filenames = new ArrayList<String>();
         File listing = new File(directory);
         for( File f : listing.listFiles() ) {
             if( f.getName().endsWith(".grn") ) {
+
                 GRNGenome g = GRNGenome.loadFromFile(f.getAbsolutePath());
+                filenames.add( f.getName() );
                 genomes.add(g);
             }
         }
@@ -39,6 +42,12 @@ class PairwiseDistances implements Callable<Integer> {
         double[][] distance = new double[genomes.size()][genomes.size()];
 
         System.out.println(genomes.size());
+
+        for( int k = 0; k < genomes.size(); k++ ) {
+            System.out.print("\"" + filenames.get(k) + "\"");
+            if( k < genomes.size()-1 ) System.out.print("\t");
+        }
+        System.out.println();
 
         for( int p = 0; p < genomes.size(); p++ ) {
             for( int q = 0; q < genomes.size(); q++ ) {
