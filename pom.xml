@@ -3,4 +3,12 @@
   <groupId>us.brevis</groupId>
   <artifactId>grneat</artifactId>
   <version>0.0.5-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>4.1.4</version>
+    </dependency>
+  </dependencies>
 </project>
