@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(description = "Mutate a GRN genome.",
          name = "grneat-mutate", mixinStandardHelpOptions = true, version = "grneat 0.0.5")
-class MutateGenome implements Callable<Integer> {
+public class MutateGenome implements Callable<Integer> {
 
     @CommandLine.Option(names = "--inputPath", description = "The location of source GRN.")
     private String inputPath;

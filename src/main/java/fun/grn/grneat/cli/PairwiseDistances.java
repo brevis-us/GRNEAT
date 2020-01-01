@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(description = "Measure all v all pairwise distances between a directory of GRNs.",
          name = "grneat-pairwise-distances", mixinStandardHelpOptions = true, version = "grneat 0.0.5")
-class PairwiseDistances implements Callable<Integer> {
+public class PairwiseDistances implements Callable<Integer> {
 
     @CommandLine.Option(names = "--directory", description = "Directory of GRNs.")
     private String directory;

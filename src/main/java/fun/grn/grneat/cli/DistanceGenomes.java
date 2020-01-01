@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(description = "Measure the distance between two genomes.",
          name = "grneat-distance", mixinStandardHelpOptions = true, version = "grneat 0.0.5")
-class DistanceGenomes implements Callable<Integer> {
+public class DistanceGenomes implements Callable<Integer> {
 
     @CommandLine.Option(names = "--pPath", description = "The location of the P genome GRN.")
     private String pPath;

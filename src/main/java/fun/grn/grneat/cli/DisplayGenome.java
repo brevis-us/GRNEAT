@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(description = "Generate a random GRN genome.",
          name = "grneat-display", mixinStandardHelpOptions = true, version = "grneat 0.0.5")
-class DisplayGenome implements Callable<Integer> {
+public class DisplayGenome implements Callable<Integer> {
 
     @CommandLine.Option(names = "--filePath", description = "The location to write the GRN.")
     private String filepath;
