@@ -26,13 +26,13 @@ public class GRNGeneMutationOperator extends GRNMutationOperator {
 			if (mutateIndex == 0) {
 				switch ((int)(rng.nextDouble()*3)) {
 				case 0: 
-					g.setProtId((int)(rng.nextDouble()*GRNProtein.IDSIZE));
+					g.setProtId(rng.nextDouble()*GRNProtein.IDSIZE);
 					break;
 				case 1: 
-					g.setProtEnh((int)(rng.nextDouble()*GRNProtein.IDSIZE));
+					g.setProtEnh(rng.nextDouble()*GRNProtein.IDSIZE);
 					break;
 				case 2: 
-					g.setProtInh((int)(rng.nextDouble()*GRNProtein.IDSIZE));
+					g.setProtInh(rng.nextDouble()*GRNProtein.IDSIZE);
 					break;
 				default: 
 					g.setDisabled(rng.nextDouble()<0.5);

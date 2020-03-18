@@ -17,9 +17,9 @@ public class GRNGene implements Comparable<Object>, Serializable {
 	protected Long geneId;
 	protected boolean isDisabled=false;
 
-	protected int protId;
-	protected int protEnh;
-	protected int protInh;
+	protected double protId;
+	protected double protEnh;
+	protected double protInh;
 	protected int protType;
 	protected int connectTo;
 	
@@ -45,7 +45,7 @@ public class GRNGene implements Comparable<Object>, Serializable {
 		this(false, 0, 0, 0, GRNProtein.REGULATORY_PROTEIN, 0);
 	}
 	
-	public GRNGene(boolean nIsDisabled, int nProtId, int nProtEnh, int nProtInh, int nProtType, int nConnectTo) {
+	public GRNGene(boolean nIsDisabled, double nProtId, double nProtEnh, double nProtInh, int nProtType, int nConnectTo) {
 		geneId=nextId++;
 		isDisabled=nIsDisabled;
 		protId=nProtId;
@@ -55,11 +55,11 @@ public class GRNGene implements Comparable<Object>, Serializable {
 		connectTo=nConnectTo;
 	}
 	
-	public GRNGene(int nProtId, int nProtEnh, int nProtInh) {
+	public GRNGene(double nProtId, double nProtEnh, double nProtInh) {
 		this(false, nProtId, nProtEnh, nProtInh, GRNProtein.REGULATORY_PROTEIN, 0);
 	}
 	
-	public GRNGene(boolean nIsDisabled, int nProtId, int nProtEnh, int nProtInh) {
+	public GRNGene(boolean nIsDisabled, double nProtId, double nProtEnh, double nProtInh) {
 		this(nIsDisabled, nProtId, nProtEnh, nProtInh, GRNProtein.REGULATORY_PROTEIN, 0);
 	}
 	
@@ -75,7 +75,7 @@ public class GRNGene implements Comparable<Object>, Serializable {
 		if (o instanceof GRNGene) {
 			GRNGene g = (GRNGene) o;
 			if (g.protType==protType) {
-				return protId-g.protId;
+				return ( protId-g.protId ) < 0.0001 ? 0 : Integer.MAX_VALUE;//TODO check, not safe
 			} else {
 				return Integer.MAX_VALUE;
 			}
@@ -101,27 +101,27 @@ public class GRNGene implements Comparable<Object>, Serializable {
 		return connectTo;
 	}
 	
-	public int getProtId() {
+	public double getProtId() {
 		return protId;
 	}
 
-	public void setProtId(int protId) {
+	public void setProtId(double protId) {
 		this.protId = protId;
 	}
 
-	public int getProtEnh() {
+	public double getProtEnh() {
 		return protEnh;
 	}
 
-	public void setProtEnh(int protEnh) {
+	public void setProtEnh(double protEnh) {
 		this.protEnh = protEnh;
 	}
 
-	public int getProtInh() {
+	public double getProtInh() {
 		return protInh;
 	}
 
-	public void setProtInh(int protInh) {
+	public void setProtInh(double protInh) {
 		this.protInh = protInh;
 	}
 
@@ -147,9 +147,9 @@ public class GRNGene implements Comparable<Object>, Serializable {
 				connectTo);*/
 		return new GRNGene(
 				rng.nextDouble()<0.5, 
-				(int)(rng.nextDouble()*GRNProtein.IDSIZE),
-				(int)(rng.nextDouble()*GRNProtein.IDSIZE),
-				(int)(rng.nextDouble()*GRNProtein.IDSIZE),
+				(rng.nextDouble()*GRNProtein.IDSIZE),
+				(rng.nextDouble()*GRNProtein.IDSIZE),
+				(rng.nextDouble()*GRNProtein.IDSIZE),
 				nProtType,
 				connectTo);
 	}

@@ -8,12 +8,12 @@ public class GRNProtein implements Serializable {
 	public static final int INPUT_PROTEIN = 0;
 	public static final int REGULATORY_PROTEIN = 2;
 	public static final int OUTPUT_PROTEIN = 1;
-	public static final int IDSIZE = 32;
+	public static final double IDSIZE = 32;
 	
-	public int id;
+	public double id;
 	public double concentration;
-	public int enhancer;
-	public int inhibiter;
+	public double enhancer;
+	public double inhibiter;
 	public int type;
 	
 	public GRNProtein() {
@@ -24,7 +24,7 @@ public class GRNProtein implements Serializable {
 		type=0;
 	}
 	
-	public GRNProtein(int ID, int typ, double conc, int enh, int inh) {
+	public GRNProtein(double ID, int typ, double conc, double enh, double inh) {
 		id=ID;
 		concentration=conc;
 		enhancer=enh;
@@ -48,7 +48,7 @@ public class GRNProtein implements Serializable {
 		return concentration;
 	}
 	
-	public int getID() {
+	public double getID() {
 		return id;
 	}
 	

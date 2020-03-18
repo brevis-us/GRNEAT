@@ -242,6 +242,13 @@ public class GRNModel implements Serializable {
 
 	}
 
+	public double getEnhanceMatching(int j, int k) {
+		return enhanceMatching[j][k];
+	}
+
+	public double getInhibitMatching(int j, int k) {
+		return inhibitMatching[j][k];
+	}
 
 	private void updateSignatures() {
 		// calculating signatures
