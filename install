@@ -1,0 +1,113 @@
+#!/bin/bash
+
+VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)')
+INSTALL_DIR=${1:-$(pwd)}
+OPSYS=${2:-"linux"}
+
+echo "Installing into $INSTALL_DIR"
+echo "Assuming operating system $OPSYS"
+
+# check for operating system
+if [[ "$OPSYS" == "linux" ]]; then
+  MEM=$(cat /proc/meminfo | grep MemTotal | sed s/^MemTotal:\\\s*\\\|\\\s\\+[^\\\s]*$//g)
+  MEM=$(($MEM/2/1024/1024))
+elif [[ "$OPSYS" == "osx" ]]; then
+  # sysctl returns total hardware memory size in bytes
+  MEM=$(sysctl hw.memsize | grep hw.memsize | sed s/hw.memsize://g)
+  MEM=$(($MEM/2/1024/1024/1024))
+else
+  echo "ERROR - Operating system (arg2) must be either linux or osx - EXITING"
+  exit
+fi
+
+# mvn clean install
+# temporary workaround for openjdk plus surefire bug
+_JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn clean install
+mvn -Dmdep.outputFile=cp.txt -Dmdep.includeScope=runtime dependency:build-classpath
+
+echo '#!/bin/bash' > grneat-display
+echo '' >> grneat-display
+echo "JAR=\$HOME/.m2/repository/us/brevis/grneat/${VERSION}/grneat-${VERSION}.jar" >> grneat-display
+echo 'java \' >> grneat-display
+echo "  -Xmx${MEM}g \\" >> grneat-display
+echo '  -XX:+UseConcMarkSweepGC \' >> grneat-display
+echo -n '  -cp $JAR:' >> grneat-display
+echo -n $(cat cp.txt) >> grneat-display
+echo ' \' >> grneat-display
+echo '  fun.grn.grneat.cli.DisplayGenome "$@"' >> grneat-display
+
+chmod a+x grneat-display
+
+echo '#!/bin/bash' > grneat-mutate
+echo '' >> grneat-mutate
+echo "JAR=\$HOME/.m2/repository/us/brevis/grneat/${VERSION}/grneat-${VERSION}.jar" >> grneat-mutate
+echo 'java \' >> grneat-mutate
+echo "  -Xmx${MEM}g \\" >> grneat-mutate
+echo '  -XX:+UseConcMarkSweepGC \' >> grneat-mutate
+echo -n '  -cp $JAR:' >> grneat-mutate
+echo -n $(cat cp.txt) >> grneat-mutate
+echo ' \' >> grneat-mutate
+echo '  fun.grn.grneat.cli.MutateGenome "$@"' >> grneat-mutate
+
+chmod a+x grneat-mutate
+
+echo '#!/bin/bash' > grneat-random
+echo '' >> grneat-random
+echo "JAR=\$HOME/.m2/repository/us/brevis/grneat/${VERSION}/grneat-${VERSION}.jar" >> grneat-random
+echo 'java \' >> grneat-random
+echo "  -Xmx${MEM}g \\" >> grneat-random
+echo '  -XX:+UseConcMarkSweepGC \' >> grneat-random
+echo -n '  -cp $JAR:' >> grneat-random
+echo -n $(cat cp.txt) >> grneat-random
+echo ' \' >> grneat-random
+echo '  fun.grn.grneat.cli.RandomGenome "$@"' >> grneat-random
+
+chmod a+x grneat-random
+
+#echo '#!/bin/bash' > grneat-crossover
+#echo '' >> grneat-crossover
+#echo "JAR=\$HOME/.m2/repository/us/brevis/grneat/${VERSION}/grneat-${VERSION}.jar" >> grneat-crossover
+#echo 'java \' >> grneat-crossover
+#echo "  -Xmx${MEM}g \\" >> grneat-crossover
+#echo '  -XX:+UseConcMarkSweepGC \' >> grneat-crossover
+#echo -n '  -cp $JAR:' >> grneat-crossover
+#echo -n $(cat cp.txt) >> grneat-crossover
+#echo ' \' >> grneat-crossover
+#echo '  fun.grn.grneat.cli.CrossoverGenomes "$@"' >> grneat-crossover
+#
+#chmod a+x grneat-crossover
+
+echo '#!/bin/bash' > grneat-distance
+echo '' >> grneat-distance
+echo "JAR=\$HOME/.m2/repository/us/brevis/grneat/${VERSION}/grneat-${VERSION}.jar" >> grneat-distance
+echo 'java \' >> grneat-distance
+echo "  -Xmx${MEM}g \\" >> grneat-distance
+echo '  -XX:+UseConcMarkSweepGC \' >> grneat-distance
+echo -n '  -cp $JAR:' >> grneat-distance
+echo -n $(cat cp.txt) >> grneat-distance
+echo ' \' >> grneat-distance
+echo '  fun.grn.grneat.cli.DistanceGenomes "$@"' >> grneat-distance
+
+chmod a+x grneat-distance
+
+echo '#!/bin/bash' > grneat-pairwise-distances
+echo '' >> grneat-pairwise-distances
+echo "JAR=\$HOME/.m2/repository/us/brevis/grneat/${VERSION}/grneat-${VERSION}.jar" >> grneat-pairwise-distances
+echo 'java \' >> grneat-pairwise-distances
+echo "  -Xmx${MEM}g \\" >> grneat-pairwise-distances
+echo '  -XX:+UseConcMarkSweepGC \' >> grneat-pairwise-distances
+echo -n '  -cp $JAR:' >> grneat-pairwise-distances
+echo -n $(cat cp.txt) >> grneat-pairwise-distances
+echo ' \' >> grneat-pairwise-distances
+echo '  fun.grn.grneat.cli.PairwiseDistances "$@"' >> grneat-pairwise-distances
+
+chmod a+x grneat-pairwise-distances
+
+rm cp.txt
+
+mkdir -p $INSTALL_DIR
+mv grneat-display $INSTALL_DIR/
+mv grneat-mutate $INSTALL_DIR/
+mv grneat-random $INSTALL_DIR/
+mv grneat-distance $INSTALL_DIR/
+mv grneat-pairwise-distances $INSTALL_DIR/
